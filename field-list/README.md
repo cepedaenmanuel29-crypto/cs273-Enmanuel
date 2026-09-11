@@ -2,7 +2,7 @@
 
 # Phase 2
 | field | purpose |
-|...|...|
+|---|---|
 | Player ID | Unique number used to identify each player |
 | Player First Name | Stores the player's first name |
 | Player Last Name | Stores the player's last name |
