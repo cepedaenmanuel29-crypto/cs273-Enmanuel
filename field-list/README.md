@@ -139,3 +139,21 @@ Games: This table represents each game, and it is separate because the date and 
 GameTeams: This table represents the teams playing in each game and their scores, and it is separate because one game can have more than one team.
 
 PlayerGameStats: This table represents a player's statistics in a game, and it is separate because a player can have different statistics in different games.
+
+# Normalization Decisions
+
+## Which fields were multipart? How did you split them?
+
+Tournament Location was a multipart field because it had different pieces of information in one field. I split it into Venue Name, City, and State.
+
+## Which fields were multivalued? How did you resolve them?
+
+The team information was multivalued because one game has more than one team. I created the GameTeams table so each team and score can be stored separately.
+
+## Which tables described more than one subject? How did you split them?
+
+The original game information had the game, teams, and scores together. I kept the game information in Games and moved the teams and scores to GameTeams.
+
+## Which fields are calculated? Confirm they are excluded from the schema.
+
+The calculated fields are Winning Team, Team Wins, Team Losses, Win Percentage, Player Total Points, and Player Average Points. These fields are not stored in the schema because they can be calculated later.
