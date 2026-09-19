@@ -1,78 +1,77 @@
 # Phase 2 - Field List & Table Structures
 
-## Project
-Basketball 3v3 Tournament Database
+## Basketball 3v3 Tournament Database
 
-For this phase, I organized my field list into tables. I tried to keep each table about one single subject.
+For this phase, I organized my fields into tables. I tried to keep each table focused on one single subject.
 
 ---
 
 ## Players
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| PlayerID | Number | Unique ID for each player. |
-| PlayerFirstName | Text | Player's first name. |
-| PlayerLastName | Text | Player's last name. |
-| PlayerDateOfBirth | Date | Player's date of birth. |
-| TeamID | Number | Shows what team the player belongs to. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| PlayerID | Integer | Unique ID for each player. | Players |
+| PlayerFirstName | Text | Player's first name. | Players |
+| PlayerLastName | Text | Player's last name. | Players |
+| PlayerDateOfBirth | Date | Player's date of birth. | Players |
+| TeamID | Integer | Shows what team the player belongs to. | Players |
 
 ## Teams
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| TeamID | Number | Unique ID for each team. |
-| TeamName | Text | Name of the team. |
-| CoachID | Number | Shows who the coach of the team is. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| TeamID | Integer | Unique ID for each team. | Teams |
+| TeamName | Text | Name of the team. | Teams |
+| CoachID | Integer | Shows who the coach of the team is. | Teams |
 
 ## Coaches
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| CoachID | Number | Unique ID for each coach. |
-| CoachFirstName | Text | Coach's first name. |
-| CoachLastName | Text | Coach's last name. |
-| CoachPhoneNumber | Text | Coach's phone number. |
-| CoachEmail | Text | Coach's email. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| CoachID | Integer | Unique ID for each coach. | Coaches |
+| CoachFirstName | Text | Coach's first name. | Coaches |
+| CoachLastName | Text | Coach's last name. | Coaches |
+| CoachPhoneNumber | Text | Coach's phone number. | Coaches |
+| CoachEmail | Text | Coach's email. | Coaches |
 
 ## Tournaments
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| TournamentID | Number | Unique ID for each tournament. |
-| TournamentDate | Date | Date of the tournament. |
-| VenueName | Text | Name of the place where the tournament is played. |
-| City | Text | City where the tournament is played. |
-| State | Text | State where the tournament is played. |
-| MVPPlayerID | Number | Player selected as MVP of the tournament. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| TournamentID | Integer | Unique ID for each tournament. | Tournaments |
+| TournamentDate | Date | Date of the tournament. | Tournaments |
+| VenueName | Text | Name of the place where the tournament is played. | Tournaments |
+| City | Text | City where the tournament is played. | Tournaments |
+| State | Text | State where the tournament is played. | Tournaments |
+| MVPPlayerID | Integer | Player selected as MVP. | Tournaments |
 
 ## Games
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| GameID | Number | Unique ID for each game. |
-| TournamentID | Number | Shows what tournament the game belongs to. |
-| GameDate | Date | Date of the game. |
-| GameTime | Time | Time of the game. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| GameID | Integer | Unique ID for each game. | Games |
+| TournamentID | Integer | Shows what tournament the game belongs to. | Games |
+| GameDate | Date | Date of the game. | Games |
+| GameTime | Time | Starting time of the game. | Games |
 
 ## GameTeams
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| GameID | Number | Shows the game. |
-| TeamID | Number | Shows the team playing in the game. |
-| TeamScore | Number | Final score for that team. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| GameID | Integer | Shows what game the team played in. | GameTeams |
+| TeamID | Integer | Shows the team playing in the game. | GameTeams |
+| TeamScore | Integer | Final score for that team. | GameTeams |
 
 ## PlayerGameStats
 
-| Field Name | Data Type | Description |
-|---|---|---|
-| GameID | Number | Shows the game. |
-| PlayerID | Number | Shows the player. |
-| PlayerPoints | Number | Points scored by the player. |
-| PlayerRebounds | Number | Rebounds made by the player. |
-| PlayerAssists | Number | Assists made by the player. |
-| PlayerSteals | Number | Steals made by the player. |
+| Field Name | Data Type | Description | Table |
+|---|---|---|---|
+| GameID | Integer | Shows what game the stats are from. | PlayerGameStats |
+| PlayerID | Integer | Shows what player the stats belong to. | PlayerGameStats |
+| PlayerPoints | Integer | Points scored by the player. | PlayerGameStats |
+| PlayerRebounds | Integer | Rebounds made by the player. | PlayerGameStats |
+| PlayerAssists | Integer | Assists made by the player. | PlayerGameStats |
+| PlayerSteals | Integer | Steals made by the player. | PlayerGameStats |
 
 ---
 
@@ -80,31 +79,25 @@ For this phase, I organized my field list into tables. I tried to keep each tabl
 
 ## Multipart Field
 
-Tournament Location was a multipart field because it had more than one piece of information inside one field.
-
-I separated it into VenueName, City, and State. This makes the information easier to store and understand.
+Tournament Location was a multipart field because it had different pieces of information inside one field. I split it into VenueName, City, and State so each part can be stored separately.
 
 ## Multivalued Field
 
-The game originally had Team 1 and Team 2 in the same area. This means the game had multiple team values connected to it.
+In my first field list, I had Team 1 ID and Team 2 ID for a game. This was multivalued information because one game has more than one team. I created the GameTeams table so each team can be connected to the game separately.
 
-I created the GameTeams table so each team in a game can be stored separately with its score.
+I also had Team 1 Score and Team 2 Score. I changed these into TeamScore in the GameTeams table, so the score belongs to the correct team and game.
 
-Player statistics can also happen many times because one player can play in many games. Because of this, I created the PlayerGameStats table.
+## More Than One Subject
 
-## Single Subject
+My original game information included the game, the teams, and their scores together. These are different subjects, so I kept the basic game information in Games and moved the teams and scores into GameTeams.
 
-I separated Players, Teams, Coaches, Tournaments, Games, GameTeams, and PlayerGameStats because they are different subjects.
-
-For example, player information belongs in the Players table, while game statistics belong in PlayerGameStats.
-
-This helps each table stay focused on one single subject.
+Player information and player game statistics are also different subjects. Player information stays in Players, while the statistics from each game are stored in PlayerGameStats.
 
 ## Calculated Fields
 
-Some fields do not need to be stored because they can be calculated later.
+I had some calculated fields in Phase 1. I am not storing these fields in the database because they can be calculated from the other information when needed.
 
-These calculated fields are:
+The calculated fields are:
 
 - Winning Team
 - Team Wins
@@ -113,26 +106,36 @@ These calculated fields are:
 - Player Total Points
 - Player Average Points
 
-For example, Winning Team can be found by comparing the scores of both teams.
+For example, Winning Team can be found by comparing the team scores. Player Total Points can be found by adding the points scored by the player in all games.
 
-Player Total Points can be found by adding all the points a player scored in all games.
+These calculated fields are excluded from the database schema.
 
-These calculated fields are not stored in the database schema.
+---
+
+# Changes From Phase 1
+
+- Tournament Location was split into VenueName, City, and State.
+- Team 1 ID and Team 2 ID were changed to TeamID in the GameTeams table.
+- Team 1 Score and Team 2 Score were changed to TeamScore in the GameTeams table.
+- Player Points, Rebounds, Assists, and Steals were moved to PlayerGameStats.
+- GameID and PlayerID were added to PlayerGameStats to show which game and player the statistics belong to.
+- TournamentID was added to Games to show which tournament each game belongs to.
+- The calculated fields are documented but are not stored in the schema.
 
 ---
 
 # Table Descriptions
 
-Players: This table stores information about each player.
+Players: This table represents the players, and it is separate because player information is its own single subject.
 
-Teams: This table stores information about each team.
+Teams: This table represents the teams, and it is separate because team information is different from player and game information.
 
-Coaches: This table stores information about each coach.
+Coaches: This table represents the coaches, and it is separate because coach information is its own single subject.
 
-Tournaments: This table stores information about each tournament.
+Tournaments: This table represents each tournament, and it is separate because tournament information is different from game information.
 
-Games: This table stores basic information about each game.
+Games: This table represents each game, and it is separate because the date and time describe the game itself.
 
-GameTeams: This table shows which teams played in each game and their scores.
+GameTeams: This table represents the teams playing in each game and their scores, and it is separate because one game can have more than one team.
 
-PlayerGameStats: This table stores each player's statistics for each game.
+PlayerGameStats: This table represents a player's statistics in a game, and it is separate because a player can have different statistics in different games.
