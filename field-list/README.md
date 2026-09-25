@@ -4,76 +4,79 @@
 
 For this phase, I organized my fields into tables. I tried to keep each table focused on one single subject.
 
----
-
 ## Players
+This is a single subject table used to store information about each player.
 
-| Field Name | Data Type | Description |  |
-|---|---|---|---|
-| PlayerID | Integer | Unique ID for each player. |  |
-| PlayerFirstName | Text | Player's first name. |  |
-| PlayerLastName | Text | Player's last name. |  |
-| PlayerDateOfBirth | Date | Player's date of birth. |  |
-| TeamID | Integer | Shows what team the player belongs to. ||
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Player_ID (PK) | INT UNSIGNED | NOT NULL | AUTO_INCREMENT | Primary Key |
+| Player_First_Name | VARCHAR(50) | NOT NULL | - | Player's first name |
+| Player_Last_Name | VARCHAR(50) | NOT NULL | - | Player's last name |
+| Player_Date_of_Birth | DATE | NOT NULL | - | Player's birth date |
+| Team_ID (FK) | INT UNSIGNED | NOT NULL | - | Connects player to a team |
 
 ## Teams
+This is a single subject table used to store information about each basketball team.
 
-| Field Name | Data Type | Description | |
-|---|---|---|---|
-| TeamID | Integer | Unique ID for each team. ||
-| TeamName | Text | Name of the team. | |
-| CoachID | Integer | Shows who the coach of the team is. | |
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Team_ID (PK) | INT UNSIGNED | NOT NULL | AUTO_INCREMENT | Primary Key |
+| Team_Name | VARCHAR(100) | NOT NULL | - | Name of the team |
+| Coach_ID (FK) | INT UNSIGNED | NOT NULL | - | Connects the team to a coach |
 
 ## Coaches
+This is a single subject table used to store information about each coach.
 
-| Field Name | Data Type | Description |  |
-|---|---|---|---|
-| CoachID | Integer | Unique ID for each coach. |  |
-| CoachFirstName | Text | Coach's first name. |  |
-| CoachLastName | Text | Coach's last name. |  |
-| CoachPhoneNumber | Text | Coach's phone number. |  |
-| CoachEmail | Text | Coach's email. |  |
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Coach_ID (PK) | INT UNSIGNED | NOT NULL | AUTO_INCREMENT | Primary Key |
+| Coach_First_Name | VARCHAR(50) | NOT NULL | - | Coach's first name |
+| Coach_Last_Name | VARCHAR(50) | NOT NULL | - | Coach's last name |
+| Coach_Phone_Number | VARCHAR(20) | NULL | - | Coach's phone number |
+| Coach_Email | VARCHAR(254) | NOT NULL | - | UNIQUE |
 
 ## Tournaments
+This is a single subject table used to store information about each tournament.
 
-| Field Name | Data Type | Description |  |
-|---|---|---|---|
-| TournamentID | Integer | Unique ID for each tournament. |  |
-| TournamentDate | Date | Date of the tournament. |  |
-| VenueName | Text | Name of the place where the tournament is played. |  |
-| City | Text | City where the tournament is played. |  |
-| State | Text | State where the tournament is played. | |
-| MVPPlayerID | Integer | Player selected as MVP. |  |
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Tournament_ID (PK) | INT UNSIGNED | NOT NULL | AUTO_INCREMENT | Primary Key |
+| Tournament_Date | DATE | NOT NULL | - | Date of the tournament |
+| Venue_Name | VARCHAR(100) | NOT NULL | - | Name of the location |
+| City | VARCHAR(100) | NOT NULL | - | City of the tournament |
+| State | VARCHAR(50) | NOT NULL | - | State of the tournament |
+| MVP_Player_ID (FK) | INT UNSIGNED | NULL | - | Player selected as MVP |
 
 ## Games
+This is a single subject table used to store information about each game.
 
-| Field Name | Data Type | Description | |
-|---|---|---|---|
-| GameID | Integer | Unique ID for each game. | |
-| TournamentID | Integer | Shows what tournament the game belongs to. |  |
-| GameDate | Date | Date of the game. |  |
-| GameTime | Time | Starting time of the game. |  |
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Game_ID (PK) | INT UNSIGNED | NOT NULL | AUTO_INCREMENT | Primary Key |
+| Tournament_ID (FK) | INT UNSIGNED | NOT NULL | - | Connects game to tournament |
+| Game_Date | DATE | NOT NULL | - | Date of the game |
+| Game_Time | TIME | NOT NULL | - | Starting time of the game |
 
 ## GameTeams
+This table stores the teams that participate in each game and their scores.
 
-| Field Name | Data Type | Description |  |
-|---|---|---|---|
-| GameID | Integer | Shows what game the team played in. |  |
-| TeamID | Integer | Shows the team playing in the game. |  |
-| TeamScore | Integer | Final score for that team. |  |
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Game_ID (PK, FK) | INT UNSIGNED | NOT NULL | - | Connects to Games |
+| Team_ID (PK, FK) | INT UNSIGNED | NOT NULL | - | Connects to Teams |
+| Team_Score | INT UNSIGNED | NULL | - | Final score for the team |
 
 ## PlayerGameStats
+This table stores each player's statistics for a specific game.
 
-| Field Name | Data Type | Description |  |
-|---|---|---|---|
-| GameID | Integer | Shows what game the stats are from. |  |
-| PlayerID | Integer | Shows what player the stats belong to. |  |
-| PlayerPoints | Integer | Points scored by the player. |  |
-| PlayerRebounds | Integer | Rebounds made by the player. |  |
-| PlayerAssists | Integer | Assists made by the player. |  |
-| PlayerSteals | Integer | Steals made by the player. |  |
-
----
+| Field | Type | Null? | Default | Notes / Constraints |
+|---|---|---|---|---|
+| Game_ID (PK, FK) | INT UNSIGNED | NOT NULL | - | Connects to Games |
+| Player_ID (PK, FK) | INT UNSIGNED | NOT NULL | - | Connects to Players |
+| Player_Points | INT UNSIGNED | NOT NULL | 0 | Points scored |
+| Player_Rebounds | INT UNSIGNED | NOT NULL | 0 | Rebounds |
+| Player_Assists | INT UNSIGNED | NOT NULL | 0 | Assists |
+| Player_Steals | INT UNSIGNED | NOT NULL | 0 | Steals |
 
 # Normalization Decisions
 
