@@ -8,70 +8,70 @@ For this phase, I organized my fields into tables. I tried to keep each table fo
 
 ## Players
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description |  |
 |---|---|---|---|
-| PlayerID | Integer | Unique ID for each player. | Players |
-| PlayerFirstName | Text | Player's first name. | Players |
-| PlayerLastName | Text | Player's last name. | Players |
-| PlayerDateOfBirth | Date | Player's date of birth. | Players |
-| TeamID | Integer | Shows what team the player belongs to. | Players |
+| PlayerID | Integer | Unique ID for each player. |  |
+| PlayerFirstName | Text | Player's first name. |  |
+| PlayerLastName | Text | Player's last name. |  |
+| PlayerDateOfBirth | Date | Player's date of birth. |  |
+| TeamID | Integer | Shows what team the player belongs to. ||
 
 ## Teams
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description | |
 |---|---|---|---|
-| TeamID | Integer | Unique ID for each team. | Teams |
-| TeamName | Text | Name of the team. | Teams |
-| CoachID | Integer | Shows who the coach of the team is. | Teams |
+| TeamID | Integer | Unique ID for each team. ||
+| TeamName | Text | Name of the team. | |
+| CoachID | Integer | Shows who the coach of the team is. | |
 
 ## Coaches
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description |  |
 |---|---|---|---|
-| CoachID | Integer | Unique ID for each coach. | Coaches |
-| CoachFirstName | Text | Coach's first name. | Coaches |
-| CoachLastName | Text | Coach's last name. | Coaches |
-| CoachPhoneNumber | Text | Coach's phone number. | Coaches |
-| CoachEmail | Text | Coach's email. | Coaches |
+| CoachID | Integer | Unique ID for each coach. |  |
+| CoachFirstName | Text | Coach's first name. |  |
+| CoachLastName | Text | Coach's last name. |  |
+| CoachPhoneNumber | Text | Coach's phone number. |  |
+| CoachEmail | Text | Coach's email. |  |
 
 ## Tournaments
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description |  |
 |---|---|---|---|
-| TournamentID | Integer | Unique ID for each tournament. | Tournaments |
-| TournamentDate | Date | Date of the tournament. | Tournaments |
-| VenueName | Text | Name of the place where the tournament is played. | Tournaments |
-| City | Text | City where the tournament is played. | Tournaments |
-| State | Text | State where the tournament is played. | Tournaments |
-| MVPPlayerID | Integer | Player selected as MVP. | Tournaments |
+| TournamentID | Integer | Unique ID for each tournament. |  |
+| TournamentDate | Date | Date of the tournament. |  |
+| VenueName | Text | Name of the place where the tournament is played. |  |
+| City | Text | City where the tournament is played. |  |
+| State | Text | State where the tournament is played. | |
+| MVPPlayerID | Integer | Player selected as MVP. |  |
 
 ## Games
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description | |
 |---|---|---|---|
-| GameID | Integer | Unique ID for each game. | Games |
-| TournamentID | Integer | Shows what tournament the game belongs to. | Games |
-| GameDate | Date | Date of the game. | Games |
-| GameTime | Time | Starting time of the game. | Games |
+| GameID | Integer | Unique ID for each game. | |
+| TournamentID | Integer | Shows what tournament the game belongs to. |  |
+| GameDate | Date | Date of the game. |  |
+| GameTime | Time | Starting time of the game. |  |
 
 ## GameTeams
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description |  |
 |---|---|---|---|
-| GameID | Integer | Shows what game the team played in. | GameTeams |
-| TeamID | Integer | Shows the team playing in the game. | GameTeams |
-| TeamScore | Integer | Final score for that team. | GameTeams |
+| GameID | Integer | Shows what game the team played in. |  |
+| TeamID | Integer | Shows the team playing in the game. |  |
+| TeamScore | Integer | Final score for that team. |  |
 
 ## PlayerGameStats
 
-| Field Name | Data Type | Description | Table |
+| Field Name | Data Type | Description |  |
 |---|---|---|---|
-| GameID | Integer | Shows what game the stats are from. | PlayerGameStats |
-| PlayerID | Integer | Shows what player the stats belong to. | PlayerGameStats |
-| PlayerPoints | Integer | Points scored by the player. | PlayerGameStats |
-| PlayerRebounds | Integer | Rebounds made by the player. | PlayerGameStats |
-| PlayerAssists | Integer | Assists made by the player. | PlayerGameStats |
-| PlayerSteals | Integer | Steals made by the player. | PlayerGameStats |
+| GameID | Integer | Shows what game the stats are from. |  |
+| PlayerID | Integer | Shows what player the stats belong to. |  |
+| PlayerPoints | Integer | Points scored by the player. |  |
+| PlayerRebounds | Integer | Rebounds made by the player. |  |
+| PlayerAssists | Integer | Assists made by the player. |  |
+| PlayerSteals | Integer | Steals made by the player. |  |
 
 ---
 
@@ -140,20 +140,4 @@ GameTeams: This table represents the teams playing in each game and their scores
 
 PlayerGameStats: This table represents a player's statistics in a game, and it is separate because a player can have different statistics in different games.
 
-# Normalization Decisions
 
-## Which fields were multipart? How did you split them?
-
-Tournament Location was a multipart field because it had different pieces of information in one field. I split it into Venue Name, City, and State.
-
-## Which fields were multivalued? How did you resolve them?
-
-The team information was multivalued because one game has more than one team. I created the GameTeams table so each team and score can be stored separately.
-
-## Which tables described more than one subject? How did you split them?
-
-The original game information had the game, teams, and scores together. I kept the game information in Games and moved the teams and scores to GameTeams.
-
-## Which fields are calculated? Confirm they are excluded from the schema.
-
-The calculated fields are Winning Team, Team Wins, Team Losses, Win Percentage, Player Total Points, and Player Average Points. These fields are not stored in the schema because they can be calculated later.
