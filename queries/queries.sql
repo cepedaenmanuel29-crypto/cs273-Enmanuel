@@ -1,0 +1,66 @@
+-- CSC 273 - Database Systems | Phase 5A - JOIN Queries
+-- Project: Basketball 3v3 Tournament Database
+-- Author: Enmanuel Cepeda
+-- MySQL 8.0 | Based on the Phase 4 schema
+-- Each query answers a question about the 3v3 tournament.
+
+USE Basketball3v3DB;
+
+-- Q1: Which players are on each team, and who coaches them?
+SELECT
+    t.TeamName,
+    CONCAT(p.PlayerFirstName, ' ', p.PlayerLastName) AS PlayerName,
+    CONCAT(c.CoachFirstName, ' ', c.CoachLastName) AS CoachName
+FROM Players AS p
+INNER JOIN Teams AS t ON p.TeamID = t.TeamID
+INNER JOIN Coaches AS c ON t.CoachID = c.CoachID
+ORDER BY t.TeamName, p.PlayerLastName, p.PlayerFirstName;
+
+-- Q2: When and where will each tournament game take place?
+SELECT
+    g.GameID,
+    g.GameDate,
+    g.GameTime,
+    tr.VenueName,
+    tr.City,
+    tr.State
+FROM Games AS g
+INNER JOIN Tournaments AS tr ON g.TournamentID = tr.TournamentID
+ORDER BY g.GameDate, g.GameTime, g.GameID;
+
+-- Q3: How many players does each team have, including teams with no players yet?
+SELECT
+    t.TeamName,
+    COUNT(p.PlayerID) AS NumberOfPlayers
+FROM Teams AS t
+LEFT JOIN Players AS p ON t.TeamID = p.TeamID
+GROUP BY t.TeamID, t.TeamName
+ORDER BY t.TeamName;
+
+-- Q4: Which teams played each game, and what score did each team record?
+SELECT
+    g.GameID,
+    g.GameDate,
+    tr.VenueName,
+    t.TeamName,
+    gt.TeamScore
+FROM GameTeams AS gt
+INNER JOIN Games AS g ON gt.GameID = g.GameID
+INNER JOIN Teams AS t ON gt.TeamID = t.TeamID
+INNER JOIN Tournaments AS tr ON g.TournamentID = tr.TournamentID
+ORDER BY g.GameID, gt.TeamScore DESC, t.TeamName;
+
+-- Q5: Which players have scored the most total points in recorded games?
+SELECT
+    p.PlayerID,
+    CONCAT(p.PlayerFirstName, ' ', p.PlayerLastName) AS PlayerName,
+    t.TeamName,
+    COUNT(ps.GameID) AS GamesPlayed,
+    SUM(ps.PlayerPoints) AS TotalPoints,
+    SUM(ps.PlayerRebounds) AS TotalRebounds,
+    SUM(ps.PlayerAssists) AS TotalAssists
+FROM PlayerGameStats AS ps
+INNER JOIN Players AS p ON ps.PlayerID = p.PlayerID
+INNER JOIN Teams AS t ON p.TeamID = t.TeamID
+GROUP BY p.PlayerID, p.PlayerFirstName, p.PlayerLastName, t.TeamID, t.TeamName
+ORDER BY TotalPoints DESC, PlayerName;
