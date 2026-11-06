@@ -41,3 +41,35 @@ This query helps track player performance across games. It joins `PlayerGameStat
 - [x] At least one query joins three or more tables (Q1, Q4, Q5)
 - [x] Every query has a plain-English SQL comment describing its question
 - [x] Every query supports a practical question from the tournament project
+
+## Phase 5B - Aggregate and Subquery Queries
+
+### Q6 - Games by Tournament
+
+Objective: See how many games are scheduled for each tournament.
+
+I used COUNT and GROUP BY to count the games for each tournament. This helps me see which tournaments have games scheduled and which ones still need games.
+
+### Q7 - Total Points by Team
+
+Objective: Compare the scoring performance of basketball teams.
+
+I used SUM, AVG, and GROUP BY to calculate total points and average points per game for each team. This helps me compare team performance.
+
+### Q8 - Teams with Three or More Players
+
+Objective: Find teams that have enough registered players for a 3v3 game.
+
+I used GROUP BY and COUNT to count players on each team. Then I used HAVING to show only teams with at least three players. This helps me find teams that can form a 3v3 lineup.
+
+### Q9 - Above-Average Scoring
+
+Objective: Find player performances that are above the average.
+
+I used a subquery with AVG to calculate the average points scored per player-game record. The main query shows performances with more points than that average. This helps me identify strong scoring performances.
+
+### Q10 - Average Rebounds and Assists
+
+Objective: Compare players based on rebounds and assists.
+
+I used AVG and GROUP BY to calculate each player's average rebounds and assists. This helps me understand how players contribute to their teams besides scoring points.
