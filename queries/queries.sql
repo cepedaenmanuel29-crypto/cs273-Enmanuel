@@ -64,3 +64,74 @@ INNER JOIN Players AS p ON ps.PlayerID = p.PlayerID
 INNER JOIN Teams AS t ON p.TeamID = t.TeamID
 GROUP BY p.PlayerID, p.PlayerFirstName, p.PlayerLastName, t.TeamID, t.TeamName
 ORDER BY TotalPoints DESC, PlayerName;
+
+-- PHASE 5B - AGGREGATE AND SUBQUERY QUERIES
+
+-- Q6: How many games are scheduled for each tournament?
+SELECT
+    tr.TournamentID,
+    tr.TournamentDate,
+    tr.VenueName,
+    COUNT(g.GameID) AS ScheduledGames
+FROM Tournaments AS tr
+LEFT JOIN Games AS g
+    ON tr.TournamentID = g.TournamentID
+GROUP BY tr.TournamentID, tr.TournamentDate, tr.VenueName
+ORDER BY ScheduledGames DESC;
+
+-- Q7: Which teams have scored the most points?
+SELECT
+    t.TeamName,
+    COUNT(gt.GameID) AS GamesRecorded,
+    COALESCE(SUM(gt.TeamScore), 0) AS TotalTeamPoints,
+    COALESCE(ROUND(AVG(gt.TeamScore), 2), 0) AS AveragePointsPerGame
+FROM Teams AS t
+LEFT JOIN GameTeams AS gt
+    ON t.TeamID = gt.TeamID
+GROUP BY t.TeamID, t.TeamName
+ORDER BY TotalTeamPoints DESC;
+
+-- Q8: Which teams have at least three players?
+SELECT
+    t.TeamName,
+    COUNT(p.PlayerID) AS RegisteredPlayers
+FROM Teams AS t
+LEFT JOIN Players AS p
+    ON t.TeamID = p.TeamID
+GROUP BY t.TeamID, t.TeamName
+HAVING COUNT(p.PlayerID) >= 3
+ORDER BY RegisteredPlayers DESC;
+
+-- Q9: Which player performances scored above the average?
+SELECT
+    g.GameID,
+    g.GameDate,
+    CONCAT(p.PlayerFirstName, ' ', p.PlayerLastName) AS PlayerName,
+    ps.PlayerPoints
+FROM PlayerGameStats AS ps
+INNER JOIN Players AS p
+    ON ps.PlayerID = p.PlayerID
+INNER JOIN Games AS g
+    ON ps.GameID = g.GameID
+WHERE ps.PlayerPoints > (
+    SELECT AVG(PlayerPoints)
+    FROM PlayerGameStats
+)
+ORDER BY ps.PlayerPoints DESC;
+
+-- Q10: Which players have the highest average rebounds and assists?
+SELECT
+    CONCAT(p.PlayerFirstName, ' ', p.PlayerLastName) AS PlayerName,
+    t.TeamName,
+    COUNT(ps.GameID) AS GamesRecorded,
+    ROUND(AVG(ps.PlayerRebounds), 2) AS AverageRebounds,
+    ROUND(AVG(ps.PlayerAssists), 2) AS AverageAssists
+FROM PlayerGameStats AS ps
+INNER JOIN Players AS p
+    ON ps.PlayerID = p.PlayerID
+INNER JOIN Teams AS t
+    ON p.TeamID = t.TeamID
+GROUP BY p.PlayerID, p.PlayerFirstName, p.PlayerLastName,
+         t.TeamID, t.TeamName
+ORDER BY AverageRebounds DESC, AverageAssists DESC;
+
