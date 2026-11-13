@@ -2,11 +2,7 @@
 -- Project: Basketball 3v3 Tournament Database
 -- Student: Enmanuel Cepeda
 -- MySQL 8.0 | Compatible with Phase 4 schema/schema.sql
---
--- Run this script ONLY after creating a NEW, EMPTY database from schema/schema.sql.
--- The schema script drops and recreates the database, so do not run it on real data.
--- Do not run this seed script twice on the same database: primary keys are fixed.
--- All names and contact details below are fictional sample data.
+
 
 USE Basketball3v3DB;
 
@@ -181,18 +177,4 @@ FROM GameTeams WHERE GameID = 6 AND TeamID = 3;
 SELECT PlayerPoints AS RestoredPlayerPoints
 FROM PlayerGameStats WHERE GameID = 6 AND PlayerID = 9;
 
--- ================================================================
--- QUICK VERIFICATION - row totals for all seven tables.
--- Expected: 7 coaches, 6 teams, 20 players, 6 tournaments,
---           6 games, 12 game-team entries, 36 player-game stats.
--- Note: this schema has no active/inactive-status column; the edge
--- cases are an unassigned coach, an empty team, a future event,
--- an unselected MVP, and zero-point player performance.
--- ================================================================
-SELECT 'Coaches' AS TableName, COUNT(*) AS RowCount FROM Coaches
-UNION ALL SELECT 'Teams', COUNT(*) FROM Teams
-UNION ALL SELECT 'Players', COUNT(*) FROM Players
-UNION ALL SELECT 'Tournaments', COUNT(*) FROM Tournaments
-UNION ALL SELECT 'Games', COUNT(*) FROM Games
-UNION ALL SELECT 'GameTeams', COUNT(*) FROM GameTeams
-UNION ALL SELECT 'PlayerGameStats', COUNT(*) FROM PlayerGameStats;
+
